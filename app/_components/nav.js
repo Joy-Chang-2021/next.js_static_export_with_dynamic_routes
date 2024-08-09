@@ -6,22 +6,22 @@ export default function Nav () {
         id: 0,
         text: "Home",
         note: "static",
-        link: "/",
+        link: "",
     }, {
         id: 1,
         text: "Intro",
         note: "static",
-        link: "/intro",
+        link: "intro",
     }, {
         id: 2,
         text: "Contact",
         note: "dynamic",
-        link: "/contact",
+        link: "contact",
     }, {
         id: 3,
         text: "Copyright",
         note: "dynamic",
-        link: "/copyright",
+        link: "copyright",
     }]
 
     return (
