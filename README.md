@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next.js static export with dynamic routes
 
-## Getting Started
+### [Github Page Demo](https://joy-chang-2021.github.io/next.js_static_export_with_dynamic_routes)
 
-First, run the development server:
+- 動態路由輸出靜態網頁、部署於 github-page
+    1. [Static Exports](https://nextjs.org/docs/app/building-your-application/deploying/static-exports) | NEXT.js
+    2. [Generating Static Params](https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes#generating-static-params) | NEXT.js
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+- 靜態打包步驟 [參考↗](https://github.com/Joy-Chang-2021/next.js_static_export)
+
+### dynamic routes
+
+- dynamic Segment `[folderName]/page.js`
+- generateStaticParams 與 dynamic Segment 結合使用  
+   在輸出打包時生成靜態路由，而不是等使用者請求時動態生成
+
+```javascript
+// app/post/[number]/page.tsx
+export async function generateStaticParams() {
+	return [{number: 0}, {number: 1}, {number: 3}]
+}
+
+export default function Post ({params}) {
+	return <p>{params.number}</p>
+}
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- addition notes
+    - generateStaticParams 主要優點在於其對於數據的智慧檢索功能，於此使用 fetch 請求資料時，這些請求將被自動記憶
+    - 當在多個 generateStaticParams、Layouts 和 Pages 使用相同參數的 fetch 時，只會執行一次請求，減少建置的時間
